@@ -13,7 +13,8 @@ from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
 
 # PLUGIN IMPORTS
-from . import PLUGINPATH, _ # for localized messages
+from . import PLUGINPATH, _  # for localized messages
+
 
 class PFS_show_we(Screen, ConfigListScreen):
 	skin = """
@@ -73,6 +74,7 @@ class PFS_show_we(Screen, ConfigListScreen):
 		if result == 0:
 			self.close()
 
+
 class PFS_alarm_clock(Screen):
 	skin = """
 		<screen name="alert" position="center,center" size="250,60" title="alert" flags="wfNoBorder" backgroundColor="transparent">
@@ -91,7 +93,7 @@ class PFS_alarm_clock(Screen):
 		self.setTitle(_("alarm-clock") + "   - PlanerFS ")
 		self["time"] = Label(" ")
 		self["time"].hide()
-		ServiceEventTracker(screen=self, eventmap={iPlayableService.evEOF: self.__schleife,})
+		ServiceEventTracker(screen=self, eventmap={iPlayableService.evEOF: self.__schleife, })
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions", "MenuActions", "InfobarChannelSelection"],
 			{
 			 "red": self.exit,
