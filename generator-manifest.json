@@ -1,0 +1,24 @@
+{
+  "depends": "",
+  "description": "PlanerFS",
+  "legacy_setup": {
+    "description": "",
+    "has_setup_translate": false,
+    "name": "",
+    "package_data": [],
+    "package_dir_value": "",
+    "packages": [],
+    "pkg": "",
+    "version": ""
+  },
+  "module_dir_name": "PlanerFS",
+  "package_name": "enigma2-plugin-extensions-planer-f-s",
+  "plugin_group": "extensions",
+  "source_repo_branch": "main",
+  "source_repo_name": "PlanerFS",
+  "source_repo_url": "https://github.com/oe-mirrors/PlanerFS.git",
+  "target_repo_branch": "main",
+  "target_repo_name": "PlanerFS",
+  "target_repo_url": "git@github.com:oe-alliance-plugins/PlanerFS.git",
+  "version": "1.0"
+}
