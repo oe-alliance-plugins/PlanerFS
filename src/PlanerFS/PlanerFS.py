@@ -70,7 +70,6 @@ conf = {
 		"ansicht": 1,
 		"version": VERSION,
 		"cards_on": None,
-		"dat_dir": CONFIGPATH,
 		"schicht_art": 0,
 		"ferien": 0,
 		"l_ferien": 0,
@@ -140,7 +139,7 @@ class PlanerFS7(Screen, HelpableScreen):
 					cat_color_list = v
 					color_list = list(cat_color_list.split(","))
 				elif k == "z_liste":
-					z_liste = list(v.split(","))  # not used
+					z_liste = list(v.split(","))  # not used # noqa F841
 				else:
 					conf[k] = v
 		self.schichtnamen = None
@@ -217,49 +216,41 @@ class PlanerFS7(Screen, HelpableScreen):
 		self["key_red"] = Label(_("Terminlist"))  # (_("Import"))
 		self["key_blue"] = Label(_("Today"))
 		self["list_titel"] = Label(_("Terminlist"))
-		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions",
-		{
-				"cancel": (self.exit, _("Close PlanerFS")),
-				"ok": (self.edit_termin, _("Edit selected Termin")),
-				}, -2)
-		self["ColorActions"] = HelpableActionMap(self, "ColorActions",
-		{
-				"yellow": (self.yellow, _("Show timer")),
-				"red": (self.red, _("Toggle Calender/Terminlist")),
-				"green": (self.green, _("Update data")),  # internet import
-				"blue": (self.blue, _("Show current month")),  #zum aktuellen Monat
-				}, -2)
-		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions",
-		{
-				"left": self.left,
-				"right": self.right,
-				"down": self.down,
-				"up": self.up,
-				}, -2)
-		self["EPGSelectActions"] = HelpableActionMap(self, "EPGSelectActions",
-		{
-				"prevBouquet": (self.Bouquet, _("Change calendar file")),
-				"nextBouquet": (self.Bouquet, _("Change calendar file")),
-				"info": (self.vcards, _("Show buisness card of selected name")),
-				"input_date_time": (self.showMainMenu, _("Show more Options in Menu")),
-				}, -2)
+		self["OkCancelActions"] = HelpableActionMap(self, "OkCancelActions", {
+			"cancel": (self.exit, _("Close PlanerFS")),
+			"ok": (self.edit_termin, _("Edit selected Termin")),
+		}, -2)
+		self["ColorActions"] = HelpableActionMap(self, "ColorActions", {
+			"yellow": (self.yellow, _("Show timer")),
+			"red": (self.red, _("Toggle Calender/Terminlist")),
+			"green": (self.green, _("Update data")),  # internet import
+			"blue": (self.blue, _("Show current month")),  #zum aktuellen Monat
+		}, -2)
+		self["DirectionActions"] = HelpableActionMap(self, "DirectionActions", {
+			"left": self.left,
+			"right": self.right,
+			"down": self.down,
+			"up": self.up,
+		}, -2)
+		self["EPGSelectActions"] = HelpableActionMap(self, "EPGSelectActions", {
+			"prevBouquet": (self.Bouquet, _("Change calendar file")),
+			"nextBouquet": (self.Bouquet, _("Change calendar file")),
+			"info": (self.vcards, _("Show buisness card of selected name")),
+			"input_date_time": (self.showMainMenu, _("Show more Options in Menu")),
+		}, -2)
 
-		self["MenuActions"] = HelpableActionMap(self, "MenuActions",
-				{
-						"menu": (self.showMainMenu, _("PlanerFSMenu"))
-				}
-		)
-		self["MediaPlayerActions"] = HelpableActionMap(self, "MediaPlayerActions",
-				{
-						"previous": (self.rueck, _("previous month")),
-						"next": (self.vor, _("next Month")),
-						"subtitles": (self.vcards_list, _("Open adress book")),
-				}, -1)
-		self["MediaPlayerSeekActions"] = HelpableActionMap(self, "MediaPlayerSeekActions",
-				{
-				"seekFwd": (self.vor, _("next Month")),
-				"seekBack": (self.rueck, _("previous month")),
-				}, -1)
+		self["MenuActions"] = HelpableActionMap(self, "MenuActions", {
+			"menu": (self.showMainMenu, _("PlanerFSMenu"))
+		})
+		self["MediaPlayerActions"] = HelpableActionMap(self, "MediaPlayerActions", {
+			"previous": (self.rueck, _("previous month")),
+			"next": (self.vor, _("next Month")),
+			"subtitles": (self.vcards_list, _("Open adress book")),
+		}, -1)
+		self["MediaPlayerSeekActions"] = HelpableActionMap(self, "MediaPlayerSeekActions", {
+			"seekFwd": (self.vor, _("next Month")),
+			"seekBack": (self.rueck, _("previous month")),
+		}, -1)
 		self.today = date.today()
 		altdat = datetime.today() - timedelta(int(conf["altloesch"]))
 		self.altdat = datetime(altdat.year, altdat.month, altdat.day, 23, 59, 59)
@@ -569,7 +560,7 @@ class PlanerFS7(Screen, HelpableScreen):
 			repeat = 0
 			for next_date in next_datet:
 				if len(str(next_datet)) > 2:
-					if x[5] == None:
+					if x[5] is None:
 						repeat = repeat + 1
 						if zeitges and x[3].date() > x[2].date():
 							zeit = None
@@ -695,7 +686,7 @@ class PlanerFS7(Screen, HelpableScreen):
 						text = text + alter1
 				if x[9] > 0:
 					text = text + ' (' + (_('Date Error')) + ')'
- 				# ENDE: fuer Geburts- und Jahrestage, Farbe festlegen und alter bestimmen
+				# ENDE: fuer Geburts- und Jahrestage, Farbe festlegen und alter bestimmen
 				text = "* %s %s" % (dat1, text) if x[11] != 0 and x[11] != 3 else "  %s %s" % (dat1, text)
 				l_2.append((text, color1, color2, x))
 		self["event_list"].setList(l_2)
@@ -731,7 +722,7 @@ class PlanerFS7(Screen, HelpableScreen):
 					self.min_dat = x - 1
 				r = datetime(self.jahr, self.monat, i)
 				wn1 = r.isocalendar()[1]
-				if wn1 and not wn1 in kwliste:
+				if wn1 and wn1 not in kwliste:
 					kwliste.append(wn1)
 				if date(self.jahr, self.monat, i).weekday() == 6:
 					f_col = self.color_holiday

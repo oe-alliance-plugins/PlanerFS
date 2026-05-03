@@ -10,16 +10,16 @@ from time import localtime, mktime
 from . import CONFIGPATH, CONFIGFILE, _  # for localized messages
 from .routines import Feiertage, Rules, Next_Termin
 conf = {
-		  "kalender_art": "Gregorian",
-		  "sec_file": "none",
-		  "cals_dir": "/tmp/",
-		  "schicht_art": "0,0,0,Schicht",
-		  "l_ferien": 0,
-		  "ferien": 0,
-		  "schicht_col": {"F": "#008B45", "S": "#FFD700", "N": "#3A5FCD", "fr": "#858585"},
-		  "dat_dir": CONFIGPATH,
-		  "categories": "Keine,Geburtstag,Feiertag,Jahrestag,Hochzeitstag,Keine,Keine,Keine,Keine,Keine",
-		  }
+	"kalender_art": "Gregorian",
+	"sec_file": "none",
+	"cals_dir": "/tmp/",
+	"schicht_art": "0,0,0,Schicht",
+	"l_ferien": 0,
+	"ferien": 0,
+	"schicht_col": {"F": "#008B45", "S": "#FFD700", "N": "#3A5FCD", "fr": "#858585"},
+	"dat_dir": CONFIGPATH,
+	"categories": "Keine,Geburtstag,Feiertag,Jahrestag,Hochzeitstag,Keine,Keine,Keine,Keine,Keine",
+}
 
 schicht_start = 0
 categories1 = (_('Birthday'), _('Anniversary'), _('Wedding day'), 'Birthday', 'Anniversary', 'Wedding day')
@@ -56,14 +56,14 @@ class hm_exp(object):
 			for cal_file in listdir(conf["dat_dir"]):
 				if cal_file.endswith(".ics"):
 					nf = (str(cal_file).replace(".ics", ""), conf["dat_dir"] + cal_file)
-					if not nf in files:
+					if nf not in files:
 						files.append(nf)
 		for cal_file in listdir(conf["cals_dir"]):
 			if cal_file.endswith(".ics"):
 				nf_file = str(cal_file)[1:].replace(".ics", "")
 				if nf_file != "ferien" or conf["l_ferien"]:
 					nf = (nf_file, conf["cals_dir"] + cal_file)
-					if not nf in files:
+					if nf not in files:
 						files.append(nf)
 		return (files)
 
@@ -131,7 +131,7 @@ class hm_exp(object):
 							if x[5] or x[3].date() >= today:
 								if x not in self.events:
 									self.events.append(x)
-					except Exception as e:
+					except Exception:
 						dataLines = []
 						tempFile = open(self.termindatei, 'rb')
 						dataLines.extend(tempFile.readlines())

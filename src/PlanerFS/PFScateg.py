@@ -3,7 +3,6 @@ from configparser import ConfigParser
 from os.path import exists, join
 
 # ENIGMA IMPORTS
-from enigma import getDesktop
 from Components.Input import Input
 from Components.Label import Label
 from Components.Sources.List import List
@@ -77,7 +76,7 @@ class color_select(Screen):
 			color = int(x.lstrip('#'), 16)
 			tx1 = " "
 			tx2 = " "
-			if scolor != None and scolor == color:
+			if scolor is not None and scolor == color:
 				self.sel_index = i
 				tx1 = " >> "
 				tx2 = " << "
@@ -112,13 +111,13 @@ class PFS_categorie_conf7(Screen, HelpableScreen):
 		skin = tmpskin.read()
 
 	def __init__(self, session):
-		color_holiday = "#FF0000"
-		color_days = "#FFFFFF"
-		color_event = "#e5b243"
-		inactiv_timer = "#FFFFFF"
-		cal_background = "#20343c4f"
-		col_list_jubi = "#FF0000"
-		col_list_txt = "#FFFFFF"
+		# color_holiday = "#FF0000"
+		# color_days = "#FFFFFF"
+		# color_event = "#e5b243"
+		# inactiv_timer = "#FFFFFF"
+		# cal_background = "#20343c4f"
+		# col_list_jubi = "#FF0000"
+		# col_list_txt = "#FFFFFF"
 		self.alt_list = []
 		self.z_liste = ["0", "1", "0", "1", "1", "0", "0", "0", "0", "0"]
 		categories = ""  # ",".join((_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"),_("None"), _("calendar days"),_("calendar holiday"),_("calendar day background"),_("calendar day event"),_("list inactive"),_("list anniversaries"),_("list txt"),_("calendar today background")))
@@ -307,9 +306,9 @@ class schicht_conf(Screen, HelpableScreen):
 			else:
 				l4l_sets = ("On", "1", "1", "0", "80", "500", "100", "10", "On,Idle", "0")
 		schicht_des = int(schicht[2])
-		if not _("without text") in self.schicht_colors:
+		if _("without text") not in self.schicht_colors:
 			self.schicht_colors[_("without text")] = "#858585"
-		if schicht_des and not _("If description") in self.schicht_colors:
+		if schicht_des and _("If description") not in self.schicht_colors:
 			self.schicht_colors[_("If description")] = "#858585"
 		elif schicht_des == 0 and _("If description") in self.schicht_colors:
 			del self.schicht_colors[_("If description")]
@@ -450,7 +449,7 @@ class schicht_conf(Screen, HelpableScreen):
 
 	def new_entry2(self, answer):
 		if answer:
-			if not answer in self.schicht_colors:
+			if answer not in self.schicht_colors:
 				self.schicht_colors[answer.strip()] = "858585"
 				self.load_list()
 			else:

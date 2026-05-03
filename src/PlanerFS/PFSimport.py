@@ -7,7 +7,7 @@ from requests import get
 from time import localtime, strftime, strptime
 
 # PLUGIN IMPORTS
-from . import CONFIGPATH, CONFIGFILE, ICSFILE, VCFFILE, _  # for localized messages
+from . import CONFIGPATH, CONFIGFILE, ICSFILE, VCFFILE  # for localized messages
 from .routines import Rules
 
 version = ""
@@ -28,10 +28,10 @@ if exists(CONFIGFILE):
 			cals_dir = configparser.get("settings", "cals_dir")
 
 
-class all_import():
+class all_import:
 	def run(self, imp_datei=None):
 		self.ok = 0
-		if imp_datei != None:
+		if imp_datei is not None:
 			list1 = []
 			list2 = []
 			if exists(CONFIGFILE):
@@ -94,7 +94,7 @@ class all_import():
 				if x[5][10] is not None:
 					rule = rule + ";BYWEEKST=" + str(x[5][10])
 				rule = rule + "\n"
-			if x[10] and x[10] != None:
+			if x[10] and x[10] is not None:
 				comment = "COMMENT:" + x[10] + "\n"
 			detailliste = on + start_dat + end_dat + summary + cat + rule + desc + anzeige + comment + off
 			if altloesch_on == "No":
@@ -142,7 +142,7 @@ class all_import():
 class vcf_import():
 	def run(self, imp_datei=None):
 		self.ok = 0
-		if imp_datei != None:
+		if imp_datei is not None:
 			list1 = []
 			list2 = []
 			if exists(VCFFILE):
@@ -232,11 +232,11 @@ class online_import():
 						datei2 = "%s%s%s.ics" % (cals_dir, kalnum, spl[0].strip())
 					if url:
 						headers = {
-								 'Accept': u"text/html,application/xhtml+xml,application/xml",
-								 'User-Agent': u"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36",
-								 'Accept-Encoding': u"gzip,deflate",
-								 'Accept-Language': u"en-US,en;q=0.8"
-								}
+							'Accept': u"text/html,application/xhtml+xml,application/xml",
+							'User-Agent': u"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36",
+							'Accept-Encoding': u"gzip,deflate",
+							'Accept-Language': u"en-US,en;q=0.8"
+						}
 						resp = get(url, headers=headers, timeout=15, verify=False)
 						status = resp.status_code
 						if datei2 and status == 200:

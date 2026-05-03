@@ -39,9 +39,9 @@ class Feiertage():
 		g = int((b - f + 1) / 3)
 		h = (19 * a + b - d - g + 15) % 30
 		i, k = divmod(c, 4)
-		l = (32 + 2 * e + 2 * i - h - k) % 7
-		m = int((a + 11 * h + 22 * l) / 451)
-		mon, tag = divmod(h + l - 7 * m + 114, 31)
+		ln = (32 + 2 * e + 2 * i - h - k) % 7
+		m = int((a + 11 * h + 22 * ln) / 451)
+		mon, tag = divmod(h + ln - 7 * m + 114, 31)
 		startDate1 = datetime(int(jahr), int(mon), int(tag + 1))
 		x = (_("Easter Sunday"), _("Holiday"), startDate1, startDate1, None, None, jahr, _("Easter Sunday"))
 		bewegl_feiertage.append(x)

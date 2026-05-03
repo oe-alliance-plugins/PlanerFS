@@ -202,13 +202,13 @@ class TerminList():
 										now = datetime.now()
 										next_datet2 = Next_Termin().next_termin(x[5], x[2], x[2], (lt[0], lt[1]), conf["vorschaum"] + 1, "terminlist2", x[17])
 										zeit1 = (x[2].hour, x[2].minute)
-										sound = conf["m_sound"]
+										sound = conf["m_sound"]  # noqa F841
 										if next_datet2 and len(next_datet2):
 											for z in next_datet2:
 												next_date = (z.year, z.month, z.day)
 												date1 = datetime(z.year, z.month, z.day, x[2].hour, x[2].minute)
 												if (x[15] or "DISPLAY" in str(x[4])) and (eigen or conf["erinn_ext"] == "1"):
-													sound = conf["m_sound"]
+													sound = conf["m_sound"]  # noqa F841
 													if x[15]:
 														dr = x[15][0]
 														date1 = datetime(z.year, z.month, z.day, dr.hour, dr.minute)

@@ -336,10 +336,10 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		if self.m_sound.value == "radio":
 			liste.extend((getConfigListEntry(_("radio url"), self.m_radio_url, "m_radio_url"),))
 		liste.extend((
-				getConfigListEntry(""),
-				getConfigListEntry(_("extern dats")),
-				getConfigListEntry(_("floating holidays"), self.kalender_art, "kalender_art"),
-				 ))
+			getConfigListEntry(""),
+			getConfigListEntry(_("extern dats")),
+			getConfigListEntry(_("floating holidays"), self.kalender_art, "kalender_art"),
+		))
 		liste.extend((getConfigListEntry(_("download on Start"), self.autosync, "autosync"),))
 		liste.extend((getConfigListEntry(_("extern events color in calendar"), self.extern_color, "extern_color"),))
 		liste.extend((getConfigListEntry(_("Show external reminders"), self.erinn_ext, "erinn_ext"),))
@@ -356,26 +356,26 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 			liste.extend((getConfigListEntry("Ferien im Startscreen", self.l_ferien, "l_ferien"),))
 		if l4l:
 			liste.extend((
-				 getConfigListEntry(""),
-				 getConfigListEntry("LCD4Linux-Settings"),
-				 getConfigListEntry(_("lcd on/off"), self.l4l_on, "l4l_on"),
-				 getConfigListEntry(_("lcd-nr"), self.l4l_lcd, "l4l_lcd"),
-				 getConfigListEntry(_("lcd screen-nr"), self.l4l_screen, "l4l_screen"),
-				 getConfigListEntry(_("lcd list fontsize"), self.l4l_font, "l4l_font"),
-				 getConfigListEntry(_("lcd timer fontsize"), self.l4lm_font, "l4lm_font"),
-				 getConfigListEntry(_("write text file"), self.l4l_ges_file, "l4l_ges_file"),
-				 getConfigListEntry(_("maximum characters per line"), self.l4l_ges_file_len, "l4l_ges_file_len"),
-				 ))
+				getConfigListEntry(""),
+				getConfigListEntry("LCD4Linux-Settings"),
+				getConfigListEntry(_("lcd on/off"), self.l4l_on, "l4l_on"),
+				getConfigListEntry(_("lcd-nr"), self.l4l_lcd, "l4l_lcd"),
+				getConfigListEntry(_("lcd screen-nr"), self.l4l_screen, "l4l_screen"),
+				getConfigListEntry(_("lcd list fontsize"), self.l4l_font, "l4l_font"),
+				getConfigListEntry(_("lcd timer fontsize"), self.l4lm_font, "l4lm_font"),
+				getConfigListEntry(_("write text file"), self.l4l_ges_file, "l4l_ges_file"),
+				getConfigListEntry(_("maximum characters per line"), self.l4l_ges_file_len, "l4l_ges_file_len"),
+			))
 		liste.extend((
-				getConfigListEntry(""),
-				getConfigListEntry(_("calendar in Menu:"), self.cal_menu, "cal_menu"),
-				getConfigListEntry(_("address book in Menu:"), self.adr_menu, "adr_menu"),
-				getConfigListEntry(_("Overview in Menu:"), self.startscreen_plus, "startscreen_plus"),
-				getConfigListEntry(_("Background from skin"), self.bgr_skin, "bgr_skin"),
-				getConfigListEntry(""),
-				getConfigListEntry(_("Placeholder in text for number of days = pd")),
-				getConfigListEntry(_("Countdown-Text:"), self.countdown_text, "cd_text"),
-				))
+			getConfigListEntry(""),
+			getConfigListEntry(_("calendar in Menu:"), self.cal_menu, "cal_menu"),
+			getConfigListEntry(_("address book in Menu:"), self.adr_menu, "adr_menu"),
+			getConfigListEntry(_("Overview in Menu:"), self.startscreen_plus, "startscreen_plus"),
+			getConfigListEntry(_("Background from skin"), self.bgr_skin, "bgr_skin"),
+			getConfigListEntry(""),
+			getConfigListEntry(_("Placeholder in text for number of days = pd")),
+			getConfigListEntry(_("Countdown-Text:"), self.countdown_text, "cd_text"),
+		))
 		if len(self.countdown_text.value):
 			liste.extend((getConfigListEntry(_("Countdown-Dat:"), self.countdown_dat, "cd_dat"),))
 		else:

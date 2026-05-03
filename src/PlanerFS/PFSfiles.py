@@ -354,13 +354,11 @@ class del_files7(Screen):
 
 	def callCopy_out(self, path):
 #		try:
-		if 1 == 1:
-			if path is not None:
-				if self["menulist"].getCurrent()[0]:
-					source = (self["menulist"].getCurrent()[1])
-					target = join(path, self["menulist"].getCurrent()[0])
-					ret = copyfile(source, target)
-					self.exit()
+		if path is not None and self["menulist"].getCurrent()[0]:
+			source = (self["menulist"].getCurrent()[1])
+			target = join(path, self["menulist"].getCurrent()[0])
+			copyfile(source, target)
+			self.exit()
 #		except Exception as e:
 #			self.writing(str(e))
 
@@ -372,9 +370,8 @@ class del_files7(Screen):
 
 	def del_file_ok(self, answer):
 #		try:
-		if 1 == 1:
-			unlink(self["menulist"].getCurrent()[1])
-			self.session.openWithCallback(self.exit, MessageBox, (self.t[0] + "\n" + _("file is deleted")), MessageBox.TYPE_INFO)
+		unlink(self["menulist"].getCurrent()[1])
+		self.session.openWithCallback(self.exit, MessageBox, (self.t[0] + "\n" + _("file is deleted")), MessageBox.TYPE_INFO)
 #		except OSError as e:
 #			txt = 'error: \n%s' % e
 #			self.session.openWithCallback(self.exit, MessageBox, txt, MessageBox.TYPE_INFO)

@@ -5,7 +5,7 @@ from os.path import join
 from time import strftime
 
 # ENIGMA IMPORTS
-from enigma import eTimer, eDVBVolumecontrol, eServiceReference, eTimer, iPlayableService
+from enigma import eTimer, eDVBVolumecontrol, eServiceReference, iPlayableService
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.ServiceEventTracker import ServiceEventTracker
@@ -138,7 +138,7 @@ class Timermeldung(Screen, InfoBarNotifications):
             self.volume_timer.startLongTimer(20)
 
     def klang(self):
-        if self.sound_on == False:
+        if self.sound_on is False:
             sref = eServiceReference(4097, 0, self.musicfile)
             self.session.nav.playService(sref)
             self.sound_on = True

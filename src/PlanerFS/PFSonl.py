@@ -63,7 +63,7 @@ class PlanerFSonline_files(Screen, ConfigListScreen):
 						except Exception:
 							kalnum = 1
 							url = split[2].strip()
-						if url and not "name = url" in x:
+						if url and "name = url" not in x:
 							name = split[0].strip()
 							if name in check_list:
 								fail = 1
@@ -91,7 +91,7 @@ class PlanerFSonline_files(Screen, ConfigListScreen):
 				}, -2
 		)
 		self["numactions"] = NumberActionMap(["InputActions"], {"1": self.keyNumberGlobal, }, -1)
-		if not self.err in self["config"].onSelectionChanged:
+		if self.err not in self["config"].onSelectionChanged:
 			self["config"].onSelectionChanged.append(self.err)
 		self.reloadList()
 		self.setTitle("PlanerFS: " + _("online-calendars"))
@@ -164,9 +164,7 @@ class PlanerFSonline_files(Screen, ConfigListScreen):
 							if x[0] == ret and x[1] != en[1]:
 								namefail = 1
 					if namefail:
-						self.session.openWithCallback(
-							self.press_ok,
-						   MessageBox, _("Name already exists or not allowed"), MessageBox.TYPE_ERROR)
+						self.session.openWithCallback(self.press_ok, MessageBox, _("Name already exists or not allowed"), MessageBox.TYPE_ERROR)
 					else:
 						en = (ret, en[1], aktiv, en[3])
 				elif self.index[1] == 2:
@@ -183,11 +181,11 @@ class PlanerFSonline_files(Screen, ConfigListScreen):
 		for x in self.onl_list2:
 			tl = "name (inactiv)" if x[2] == "#" else "name"
 			liste.extend((
-						getConfigListEntry(tl, NoSave(ConfigText(default=x[0], fixed_size=False)), 1, x),
-						getConfigListEntry("", NoSave(ConfigText(default=x[1], fixed_size=False)), 2, x),
-						getConfigListEntry("zeige in Kalender", NoSave(ConfigSelection(choices=[("1", 1), ("2", 2)], default=x[4])), 3, x),
-						getConfigListEntry(""),
-						))
+				getConfigListEntry(tl, NoSave(ConfigText(default=x[0], fixed_size=False)), 1, x),
+				getConfigListEntry("", NoSave(ConfigText(default=x[1], fixed_size=False)), 2, x),
+				getConfigListEntry("zeige in Kalender", NoSave(ConfigSelection(choices=[("1", 1), ("2", 2)], default=x[4])), 3, x),
+				getConfigListEntry(""),
+			))
 		self.list = liste
 		self["config"].setList(self.list)
 

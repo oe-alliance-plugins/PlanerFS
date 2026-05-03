@@ -41,7 +41,7 @@ vorschaum = int(conf["vorschaum"])
 wochentage = ("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
 
 
-class PFS_l4l():
+class PFS_l4l:
 	def __init__(self, listnew, l4l_sets, vorschaut, display_size):
 		from Plugins.Extensions.LCD4linux.module import L4Lelement
 		MyElements = L4Lelement()
@@ -50,10 +50,10 @@ class PFS_l4l():
 		screen = l4l_sets[1]
 		font = int(l4l_sets[2])
 		listnew.sort(key=lambda x: (x[0][0], x[0][1], x[0][2]))
-		color = "white"
+		color = "white"  # noqa F841
 		color_inactiv = "grey"
 		color_ue = "yellow"
-		list = []
+		# list = []
 		ges_list = []
 		geblist = []
 		termlist = []
@@ -78,7 +78,7 @@ class PFS_l4l():
 			alter = 0
 			if len(x) > 8:
 				dat = x[9].date()
-				alter = x[8]
+				alter = x[8]  # noqa F841
 			check = (x[1])
 			if conf["doubles"]:
 				check = (dat, x[1])
@@ -91,7 +91,7 @@ class PFS_l4l():
 					color2 = color
 					alter = x[8]
 					alter2 = ""
-					jutxt = ""
+					jutxt = ""  # noqa F841
 					jubi = None
 					cat_ind = None
 					categories = (str(x[2]).strip().lower(), str(x[5]).strip().lower())

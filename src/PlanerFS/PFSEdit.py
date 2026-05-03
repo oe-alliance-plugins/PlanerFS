@@ -294,10 +294,10 @@ class PFS_edit_Termin(ConfigListScreen, Screen):
 		self["config"].setList(self.list)
 
 	def downPressed(self):
-		l = len(self.list)
+		lng = len(self.list)
 		idx = self["config"].getCurrentIndex()
 		idx = idx + 1
-		if idx < l:
+		if idx < lng:
 			self["config"].setCurrentIndex(idx)
 			self.help()
 

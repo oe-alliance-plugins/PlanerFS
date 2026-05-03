@@ -40,13 +40,12 @@ class PFS_show_we(Screen, ConfigListScreen):
 		ConfigListScreen.__init__(self, self.list1)
 		self["key_green"] = Label(_("Start"))
 		self["key_red"] = Label(_("Cancel"))
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions", "MenuActions", "InfobarChannelSelection"],
-			{
-			 "ok": self.wecker_timer,
-			 "green": self.wecker_timer,
-			 "red": self.close,
-			 "cancel": self.close,
-			 }, -1)
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions", "MenuActions", "InfobarChannelSelection"], {
+			"ok": self.wecker_timer,
+			"green": self.wecker_timer,
+			"red": self.close,
+			"cancel": self.close,
+		}, -1)
 		self.musicfile = join(PLUGINPATH, "PFSsound.mp3")
 		self["config"].setList(self.list1)
 
@@ -94,17 +93,16 @@ class PFS_alarm_clock(Screen):
 		self["time"] = Label(" ")
 		self["time"].hide()
 		ServiceEventTracker(screen=self, eventmap={iPlayableService.evEOF: self.__schleife, })
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions", "MenuActions", "InfobarChannelSelection"],
-			{
-			 "red": self.exit,
-			 "cancel": self.exit,
-			 "ok": self.info,
-			 "back": self.info,
-			 "left": self.info,
-			 "right": self.info,
-			 "up": self.info,
-			 "down": self.info,
-			 }, -1)
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions", "DirectionActions", "MenuActions", "InfobarChannelSelection"], {
+			"red": self.exit,
+			"cancel": self.exit,
+			"ok": self.info,
+			"back": self.info,
+			"left": self.info,
+			"right": self.info,
+			"up": self.info,
+			"down": self.info,
+		}, -1)
 		self.musicfile = join(PLUGINPATH, "PFSsound.mp3")
 		self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.onLayoutFinish.append(self.start_timer)
@@ -119,8 +117,7 @@ class PFS_alarm_clock(Screen):
 
 	def klang(self):
 		self.we_timer = None
-
-		if self.sound_on == False:
+		if self.sound_on is False:
 			lt = localtime()
 			self["time"].setText('%0.2d:%0.2d' % (lt[3], lt[4]))
 			self["time"].show()

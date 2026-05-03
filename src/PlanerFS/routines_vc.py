@@ -186,7 +186,7 @@ class Cards_parse():
 #			elif mask['KEY'].match(line):
 #				KEY = mask['KEY'].match(line).group(0)
 
-		   # ext_list=(NICKNAME,PHOTO,LABEL,MAILER,TZ,GEO,TITLE,ROLE,LOGO,AGENT,ORG,CATEGORIES,NOTE,PRODID,REV,SORTSTRING,SOUND,VERSION,UID,URL,CLASS,KEY)
+			# ext_list=(NICKNAME,PHOTO,LABEL,MAILER,TZ,GEO,TITLE,ROLE,LOGO,AGENT,ORG,CATEGORIES,NOTE,PRODID,REV,SORTSTRING,SOUND,VERSION,UID,URL,CLASS,KEY)
 			#if not len(n):
 			#   n=n2
 			#   sortname=sortname2

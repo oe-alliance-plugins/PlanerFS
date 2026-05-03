@@ -23,7 +23,7 @@ from Screens.InfoBarGenerics import InfoBarNotifications
 from skin import parseColor
 
 # PLUGIN IMPORTS
-from . import CONFIGPATH, CONFIGFILE, PLUGINPATH, VCFFILE, DWIDE, _  # for localized messages
+from . import CONFIGFILE, PLUGINPATH, VCFFILE, DWIDE, _  # for localized messages
 from .routines_vc import Cards_parse
 
 try:
@@ -331,10 +331,10 @@ class PFS_edit_cards(ConfigListScreen, Screen, InfoBarNotifications):
 			self["key_yellow"].setText(_("extended"))
 
 	def downPressed(self):
-		l = len(self.list)
+		lng = len(self.list)
 		idx = self["config"].getCurrentIndex()
 		idx = idx + 1
-		if idx < l:
+		if idx < lng:
 			self.reloadList()
 			self["config"].setCurrentIndex(idx)
 			self.gethelp()
@@ -643,7 +643,7 @@ class PFS_show_card_List7(Screen, HelpableScreen, InfoBarNotifications):
 						geburtstag = builder % (x[6][0], x[6][1])
 					tel_x = ""
 					if len(x[11]):
-						notiz = "%s:%s" % (x[11][0], x[11][1])
+						notiz = "%s:%s" % (x[11][0], x[11][1])  # noqa F841
 					tel_x = ""
 					for x_tel in x[7]:
 						if len(x_tel[2]):

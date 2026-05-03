@@ -39,7 +39,7 @@ from .PlanerFS import PlanerFS7
 
 txt = "VERSION: %s\n" % VERSION
 try:
-	from Plugins.Extensions.LCD4linux.module import L4Lelement
+	from Plugins.Extensions.LCD4linux.module import L4Lelement  # noqa F401
 	L4L = True
 except Exception:
 	L4L = None
@@ -52,34 +52,34 @@ if not fileExists(ICSFILE):
 if not fileExists(VCFFILE):
 	copyfile(join(PLUGINPATH, "sample.vcf"), VCFFILE)
 conf = {
-		"ext_menu": "True",
-		"startscreen_plus": "True",
-		"version": "",
-		"plfs_list": "",
-		"timer_on": "On",
-		"akt_intv": "24",
-		"startanzeige2": "systemstart",
-		"timestartstandby": "No",
-		"kalender_art": "Gregorian",
-		"vorschaum": "3",
-		"starttime": "None",
-		"autosync": "No",
-		"sec_file": "none",
-		"cal_menu": "1",
-		"adr_menu": "1",
-		"l4l_on": "Yes",
-		"l4l_lcd": "1",
-		"l4l_screen": "1",
-		"l4l_font": "40",
-		"l_ferien": "0",
-		"ferien": "0",
-		"schicht_send_url": "None",
-		"dat_dir": CONFIGPATH,
-		"cals_dir": "/tmp/",
-		"categories": "Keine,Geburtstag,Feiertag,Jahrestag,Hochzeitstag,Keine,Keine,Keine,Keine,Keine",
-		"cat_color_list": "#00008B,#D2691E,#006400,#696969,#FFD700,#000000,#B22222,#8B8878,#CD0000,#00868B,#f0f8ff,#ff4500,#20343c4f,#deb887,#228B22,#5F9EA0,#DC143C,#F0F8FF,#EEC900",
-		"z_liste": "0,1,0,1,1,0,0,0,0,0",
-		}
+	"ext_menu": "True",
+	"startscreen_plus": "True",
+	"version": "",
+	"plfs_list": "",
+	"timer_on": "On",
+	"akt_intv": "24",
+	"startanzeige2": "systemstart",
+	"timestartstandby": "No",
+	"kalender_art": "Gregorian",
+	"vorschaum": "3",
+	"starttime": "None",
+	"autosync": "No",
+	"sec_file": "none",
+	"cal_menu": "1",
+	"adr_menu": "1",
+	"l4l_on": "Yes",
+	"l4l_lcd": "1",
+	"l4l_screen": "1",
+	"l4l_font": "40",
+	"l_ferien": "0",
+	"ferien": "0",
+	"schicht_send_url": "None",
+	"dat_dir": CONFIGPATH,
+	"cals_dir": "/tmp/",
+	"categories": "Keine,Geburtstag,Feiertag,Jahrestag,Hochzeitstag,Keine,Keine,Keine,Keine,Keine",
+	"cat_color_list": "#00008B,#D2691E,#006400,#696969,#FFD700,#000000,#B22222,#8B8878,#CD0000,#00868B,#f0f8ff,#ff4500,#20343c4f,#deb887,#228B22,#5F9EA0,#DC143C,#F0F8FF,#EEC900",
+	"z_liste": "0,1,0,1,1,0,0,0,0,0",
+}
 systemstart = 0
 display_size = None
 l4l_sets = [1, 1, 40]
@@ -136,7 +136,7 @@ adr_menu = conf["adr_menu"]
 startscreen_plus = conf["startscreen_plus"]
 
 
-class einlesen():
+class einlesen:
 	def __init__(self, r=False):
 		if r:
 			global plfstimer_list
@@ -189,7 +189,7 @@ class einlesen():
 					for i2 in range(anz):
 						sh1 = schicht1[i2]
 						nt = sh1[1].replace(" ", "%20")
-						if nt == None or nt == "":
+						if nt is None or nt == "":
 							nt = "frei"
 						nl2 += sh1[3].strftime('%d.%m.%Y') + "," + nt + ";"
 				opt = ' -O /dev/null'
@@ -207,7 +207,7 @@ class einlesen():
 			plfs_list = termine
 
 
-class Termin_Timer():
+class Termin_Timer:
 	def __init__(self):
 		self.session = None
 		self.erstmal = 0
@@ -412,9 +412,11 @@ def Plugins(**kwargs):
 		pfc_list.append(PluginDescriptor.WHERE_EXTENSIONSMENU)
 	if adr_menu == 2 or adr_menu == 4:
 		pfa_list.append(PluginDescriptor.WHERE_EXTENSIONSMENU)
-	liste = [PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart, wakeupfnc=pfs_wecker2),
-		  PluginDescriptor(name="PlanerFS", where=pfc_list, icon="PlanerFS.png", description=_("Schedule appointments, view events"), fnc=main),
-		  PluginDescriptor(name=_("PlanerFS address book"), description=_("addresses and phone numbers search, find, manage, and more"), where=pfa_list, icon="PlanerFS_adr.png", fnc=adress), ]
+	liste = [
+		PluginDescriptor(where=[PluginDescriptor.WHERE_SESSIONSTART], fnc=autostart, wakeupfnc=pfs_wecker2),
+		PluginDescriptor(name="PlanerFS", where=pfc_list, icon="PlanerFS.png", description=_("Schedule appointments, view events"), fnc=main),
+		PluginDescriptor(name=_("PlanerFS address book"), description=_("addresses and phone numbers search, find, manage, and more"), where=pfa_list, icon="PlanerFS_adr.png", fnc=adress),
+	]
 	if startscreen_plus == "True":
 		liste.append(PluginDescriptor(name=_("PlanerFS overview"), where=pfc_list, icon="PlanerFS.png", description=_("Show start screen with overview"), fnc=uebersicht))
 	if cal_menu == 3 or cal_menu == 4:

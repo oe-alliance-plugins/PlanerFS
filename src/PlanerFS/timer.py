@@ -54,7 +54,7 @@ class TimerList():
 					aktiv = "aktiv"
 					if x[5]:
 						aktiv = str(x[5])
-					if x[6] and x[6] != None:
+					if x[6] and x[6] is not None:
 						wdhlg = "repeat"
 					if wdhlg == "unique" and date(x[3].year, x[3].month, x[3].day) < date.today():  # ToDo
 						aktiv = "no_activ"
