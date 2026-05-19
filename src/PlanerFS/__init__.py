@@ -50,13 +50,15 @@ CONF = {
 		"z_liste": "0,1,0,1,1,0,0,0,0,0",
 		}
 
+PluginLanguageDomain = "PlanerFS"
+
 
 def localeInit():
-    bindtextdomain("PlanerFS", join(PLUGINPATH, "locale"))
+    bindtextdomain(PluginLanguageDomain, join(PLUGINPATH, "locale"))
 
 
 def _(txt):
-    t = dgettext("PlanerFS", txt)
+    t = dgettext(PluginLanguageDomain, txt)
     if t == txt:
         print("[PlanerFS] fallback to default translation for %s" % txt)
         t = gettext(txt)
