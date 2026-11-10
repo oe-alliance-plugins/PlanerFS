@@ -1,13 +1,13 @@
 # PYTHON IMPORTS
 from configparser import ConfigParser
-from datetime import datetime, timedelta, date, time
-from icalendar import Calendar
-from re import compile, match
+from datetime import date, datetime, time, timedelta
 from os.path import getsize
-from time import timezone, localtime, altzone
+from re import compile, match
+from time import altzone, localtime, timezone
+from icalendar import Calendar
 
 # PLUGIN IMPORTS
-from . import CONFIGPATH, CONFIGFILE, _  # for localized messages
+from . import CONFIGFILE, CONFIGPATH, _  # for localized messages
 
 
 def getTimeDiffUTC():
@@ -16,7 +16,9 @@ def getTimeDiffUTC():
 
 
 def Code_utf8(wert=""):
-	wert = wert.replace('\xc2\x86', '').replace('\xc2\x87', '') or ""
+	if wert is None:  # Optional calendar text such as SUMMARY may be absent.
+		wert = ""
+	wert = wert.replace("\xc2\x86", "").replace("\xc2\x87", "")
 	return wert
 
 
