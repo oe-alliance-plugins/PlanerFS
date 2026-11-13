@@ -349,8 +349,6 @@ class Rules():
 			startTime = time(0)
 			if gcal:
 				self.oldtz = gcal.get('X-WR-TIMEZONE')
-				mask = {}
-				mask['TRIGGER'] = compile("^TRIGGER(.*)")
 				for Icomp in gcal.walk():
 					if Icomp.name == "VEVENT":
 						timed = 'ganztag'
@@ -360,10 +358,6 @@ class Rules():
 						alert = None
 						schicht1 = 0
 						exdate = []
-						for Icomp2 in Icomp.walk("VALARM"):
-							aktion = Icomp2.decoded('ACTION', None)
-							aktion_des = Icomp2.decoded('description', None)
-						Icomp_str = str(Icomp)
 						txt_s = Code_utf8(Icomp.get('summary'))
 						if schicht and txt_s.strip() in schicht:
 							schicht1 = 1
@@ -386,25 +380,29 @@ class Rules():
 						DTstart = DTstart.replace(tzinfo=None)
 						if DTend is None:
 							DTend = DTstart
-						if 'TRIGGER' in Icomp_str or 'EXDATE' in Icomp_str:
-							lines = Icomp_str.split("\n")
-							for line in lines:
-								if 'TRIGGER' in line:
-									erg = self.parseTrigger(line, DTstart)
-									trigger1 = erg[0]
-									if erg[1] and aktion and aktion.upper() == "DISPLAY":
-										if aktion_des is None:
-											aktion_des = txt_s
-										alert = (erg[1], str(aktion_des), erg[2], erg[3])
-								elif 'EXDATE' in line:
-									ed = line.split(":")
-									ed_a = self.parseDate(ed[1], 1)
-									exdate.append(ed_a)
+						# Read calendar properties, not their Python object representation.
+						for propertyName, propertyValue in Icomp.property_items(recursive=False):
+							if propertyName == "EXDATE":
+								for dateValue in propertyValue.dts:
+									excludedDate = self.parseDate(dateValue.to_ical().decode("utf-8"))
+									# The recurrence filter compares calendar dates.
+									exdate.append(excludedDate.date() if isinstance(excludedDate, datetime) else excludedDate)
+						for alarm in Icomp.walk("VALARM"):
+							aktion = alarm.decoded("ACTION", None)
+							aktion_des = alarm.decoded("DESCRIPTION", None)
+							alarmTrigger = alarm.get("TRIGGER")
+							if alarmTrigger is not None:
+								triggerType = ";VALUE=DATE-TIME" if isinstance(alarmTrigger.dt, datetime) else ""
+								triggerValue = alarmTrigger.to_ical().decode("utf-8")
+								erg = self.parseTrigger(f"TRIGGER{triggerType}:{triggerValue}", DTstart)
+								trigger1 = erg[0]
+								if erg[1] and aktion and aktion.upper() == "DISPLAY":
+									if aktion_des is None:
+										aktion_des = txt_s
+									alert = (erg[1], str(aktion_des), erg[2], erg[3])
 						rrule = Icomp.get("rrule", None)
 						if rrule:
-							rrule = str(rrule).strip()  # + ';'	# Leerzeichen sowie \r\n am Anfang sowie am Ende entfernen
-							rrule = rrule.replace(' ', '')  # Leerzeichen entfernen
-							rule = self.parseRule(rrule)
+							rule = self.parseRule(rrule.to_ical().decode("utf-8"))
 						descript = txt_s
 						d_read = Icomp.get('description', None)
 						if d_read:  # and len(d_read.strip()):
