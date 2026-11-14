@@ -1,14 +1,15 @@
 # PYTHON IMPORTS
 from configparser import ConfigParser
-from datetime import datetime, date, timedelta
+from datetime import date, datetime, timedelta
 from os import listdir, remove
 from os.path import exists, join
 from time import localtime, mktime
 
 # ENIGMA IMPORTS
 from enigma import getDesktop
+
 from Components.ActionMap import ActionMap
-from Components.config import getConfigListEntry, ConfigInteger, ConfigYesNo, ConfigText, ConfigClock, ConfigSelection, ConfigSequence, ConfigDirectory, NoSave
+from Components.config import ConfigClock, ConfigDirectory, ConfigInteger, ConfigSelection, ConfigSequence, ConfigText, ConfigYesNo, NoSave, getConfigListEntry
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Screens.ChoiceBox import ChoiceBox
@@ -24,7 +25,7 @@ except Exception:
 	l4l = None
 
 # PLUGIN IMPORTS
-from . import CONFIGPATH, CONFIGFILE, PLUGINPATH, _  # for localized messages
+from . import CONFIGFILE, CONFIGPATH, PLUGINPATH, _  # for localized messages
 
 lt = localtime()
 heute = "%02i.%02i.%04i" % (lt[2], lt[1], lt[0])
@@ -115,12 +116,17 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.conf["m_vol_min"] = int(vol[0])
 		self.conf["m_vol_max"] = int(vol[1])
 		self.now = [x for x in localtime()]
-		if self.conf["starttime"] != "None":
-			st = self.conf["starttime"].strip().split(':')
-			if len(st) > 1:
-				self.now[3] = st[0]
-				self.now[4] = st[1]
-		def_Start_Time = mktime(tuple(self.now))
+		startTime = str(self.conf["starttime"]).strip()
+		if startTime not in ("", "None"):
+			try:
+				startHour, startMinute = (int(x) for x in startTime.split(":"))
+				if not (0 <= startHour <= 23 and 0 <= startMinute <= 59):
+					raise ValueError("Time is outside the clock range")
+			except ValueError:
+				print(f"[PlanerFS] Invalid start time {startTime!r}; using the current time in settings.")
+			else:
+				self.now[3:5] = startHour, startMinute
+		defaultStartTime = mktime(tuple(self.now))
 		cal_files = []
 		if exists(CONFIGPATH):
 			for cal_file in listdir(CONFIGPATH):
@@ -184,7 +190,7 @@ class PlanerFSConfiguration(Screen, ConfigListScreen):
 		self.l4l_ges_file_len = NoSave(ConfigInteger(default=self.conf["l4l_ges_file_len"], limits=(10, 999)))
 		self.doubles = NoSave(ConfigSelection(choices=[(0, _("No")), (1, _("Yes"))], default=self.conf["doubles"]))
 		self.l_ferien = NoSave(ConfigSelection(choices=[(0, _("No")), (1, _("Yes"))], default=self.conf["l_ferien"]))
-		self.startTime = NoSave(ConfigClock(default=def_Start_Time))
+		self.startTime = NoSave(ConfigClock(default=defaultStartTime))
 		self.schicht_art = NoSave(ConfigSelection(choices=[(0, _("No")), (1, _("In Calendar") + " 1"), (2, _("In Calendar") + "2")], default=int(self.schicht[0])))
 		self.schicht_onstart = NoSave(ConfigSelection(choices=[("0", _("No")), ("1", _("Yes"))], default=self.schicht[1]))
 		self.schicht_beschr = NoSave(ConfigSelection(choices=[("0", _("No")), ("1", _("Yes"))], default=self.schicht[2]))
